@@ -8,12 +8,12 @@ function solution(numbers, hand) {
     for(num of numbers) {
         if(!num) num = 11
         const column = num % 3
-        if(column == 1) set_hand('L')
-        else if(column == 0) set_hand('R')
-        else {
-            const distance_L = distance(left, num), distance_R = distance(right, num)
-            set_hand((distance_L < distance_R) ? 'L' : (distance_L > distance_R) ? 'R' : (hand == "left") ? 'L' : 'R')
-        }
+        set_hand(
+            (column == 1) ? 'L' : (column == 0) ? 'R' : (() => {
+                const distance_L = distance(left, num), distance_R = distance(right, num)
+                return (distance(left, num) < distance_R) ? 'L' : (distance_L > distance_R) ? 'R' : (hand == "left") ? 'L' : 'R'
+            })()
+        )
     }
     return answer
 }

@@ -1,3 +1,8 @@
+numbers = [7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2]
+hand = "left"	
+
+console.log(solution(numbers, hand))
+
 function solution(numbers, hand) {
     let answer = '';
     
