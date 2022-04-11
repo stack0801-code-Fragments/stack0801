@@ -1,6 +1,6 @@
 function solution(numbers, hand) {
     let answer = '', left = 10, right = 12, num
-    const distance = (n1, n2) => Math.abs(n1 - n2) % 3 + Math.abs(Math.floor((n1 - 1) / 3) - Math.floor((n2 - 1) / 3))
+    const distance = (n1, n2) => (Math.abs(n1 - n2) % 3 ? 1 : 0) + Math.abs(Math.floor((n1 - 1) / 3) - Math.floor((n2 - 1) / 3))
     const set_hand = (h) => {
         (h == 'L') ? left = num : right = num
         answer += h
