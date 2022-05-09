@@ -1,38 +1,35 @@
-rows = 3
-columns = 3
-queries = [[1,1,2,2],[1,2,2,3],[2,1,3,2],[2,2,3,3]]
-
-console.log(solution(rows, columns, queries))
-
 function solution(rows, columns, queries) {
-    const answer = []
-    let list = {}
-    let buff
-    let min
-
-    const rotate = (count, x, y, dx, dy) => {
+    const answer = [];
+    let min, pivot, y1, x1, y2, x2;             // 이때는 변수를 외부에서 선언하는게 좋다고 생각했음
+    
+    const arr = []                              // 맵 생선, 초기화
+    for (let i = 0; i < rows; i++) {
+        arr[i] = [];
+        for (let j = 0; j < columns; j++)
+            arr[i][j] = i * columns + j + 1;
+    }
+    
+    const get_min = (i) => { min = i < min ? i : min }      // 최솟값 얻는 함수
+    
+    const rotate = (count, x, y, dx, dy) => {               // 라인을 미는 함수
         for(let i = 0; i < count; i++) {
-            const a = (y + dy * (i - 1) - 1) * columns + x + dx * (i - 1)
-            const b = (y + dy * i - 1) * columns + x + dx * i
-            const c = list[b] != undefined ? list[b] : b
-        
-            if(c < min)
-                min = c
-
-            buff[a] = c
+            arr[y + dy * i][x + dx * i] = arr[y + dy * (i + 1)][x + dx * (i + 1)];
+            get_min(arr[y + dy * (i + 1)][x + dx * (i + 1)]);
         }
     }
-    for(let query of queries) {
-        buff = {}
-        min = query[2] * columns + query[3]
-
-        rotate(query[2] - query[0], query[3], query[2] - 1, 0, -1)
-        rotate(query[3] - query[1], query[3] - 1, query[0], -1, 0)
-        rotate(query[2] - query[0], query[1], query[0] + 1, 0, 1)
-        rotate(query[3] - query[1], query[1] + 1, query[2], 1, 0)
-
-        list = { ...list, ...buff }
-        answer.push(min)
+    
+    for(let query of queries) {                             // 설정범위에 맞게 상자를 돌림
+        [y1, x1, y2, x2] = query.map(x => x - 1);
+        min = arr[y2][x2];
+        pivot = arr[y1][x1];
+        rotate(y2 - y1, x1, y1, 0, 1);
+        rotate(x2 - x1, x1, y2, 1, 0);
+        rotate(y2 - y1, x2, y2, 0, -1);
+        rotate(x2 - x1 - 1, x2, y1, -1, 0);
+        arr[y1][x1 + 1] = pivot;
+        get_min(pivot);
+        answer.push(min);
     }
+    
     return answer
 }
