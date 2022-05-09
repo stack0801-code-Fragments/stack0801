@@ -1,4 +1,4 @@
-function solution(orders, course) {
+function solution(orders, course) {                     // 이거 개똥 코드임 왜 통과해버렸는지 모르겠음
     let list = {}
     orders.map((order, i) => orders[i] = order.split('').sort().join(''))
     orders.map((order1, i1) => {
