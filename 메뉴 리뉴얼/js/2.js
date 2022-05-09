@@ -1,6 +1,6 @@
 function solution(orders, course) {
     const answer = []
-    const list = {}
+    const list = []
     course.map(c => list[c] = {})                   // 코스에 따라 list 분류
     orders.map(order => {                           // order 에 따라 맞는 코스 경우의 수
         order = order.split('').sort()              // order 를 배열로
@@ -8,7 +8,7 @@ function solution(orders, course) {
         while(--count > 2) {
             let str = ""
             for(let i in order) {
-                if(count & Math.pow(2, order.length - i - 1))
+                if(count & Math.pow(2, i))
                     str += order[i]
             }
             if(list[str.length])                    // 효율을 위해 원하는 코스만 저장
