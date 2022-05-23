@@ -1,20 +1,28 @@
 function solution(priorities, location) {
-    let p_sort = priorities.slice().sort((a, b) => b - a);
+    const get_max_arr = (arr) => {
+        let max = 0;
+        for(n of arr) {
+            if(n > max)
+                max = n;
+        }
+        return max;
+    }
+    let max = get_max_arr(priorities);
     let count = 0;
 
     while(true) {
         let n = priorities.shift();
 
-        if(n === p_sort[0]) {
+        if(n === max) {
             count++;
             if(location === 0)
                 return count;
-            p_sort.shift();
+            max = get_max_arr(priorities);
         }
         else 
             priorities.push(n);
 
-        if(location-- == 0)
+        if(location-- === 0)
             location += priorities.length;
     }
 }

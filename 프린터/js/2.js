@@ -14,7 +14,7 @@ function solution(priorities, location) {
         else 
             priorities.push(n);
 
-        if(location-- == 0)
+        if(location-- === 0)
             location += priorities.length;
     }
 }
